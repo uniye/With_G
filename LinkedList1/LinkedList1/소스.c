@@ -17,6 +17,9 @@ struct Week{
 typedef struct Week Week; 가능
 */
 
+int add_after(Week* prev, char* item);
+int strcmp_ptr(const char* ptr1, const char* ptr2);
+
 main() {
 	//Week* head = malloc(sizeof(struct Week)); => 이렇게 만들어서 head 지정해도 되는데 h로 대신함.
 	Week* headweek = malloc(sizeof(struct Week));
@@ -65,6 +68,50 @@ main() {
 	for (; h1 != NULL; h1 = h1->nextWeek) {
 		printf("%s\n", h1->weekname);
 	}
+	printf("\n");
+	printf("\n");
 
+	
+	//만약 Wen 다음에 힘듬이라는 단어를 추가 하고 싶음
+	Week* h2 = headweek;
+	char* findw = "Wen";
+	Week* w = malloc(sizeof(struct Week));
+	for (; h2 != NULL; h2 = h2->nextWeek) {
+		if (strcmp_ptr(h2->weekname, findw)==1) {
+			w = h2;
+		}
+	}
+	
+	char *addw = "힘듬";
+	Week* newweek = malloc(sizeof(struct Week));
+	strcpy(newweek->weekname, addw);
+	newweek->nextWeek = w->nextWeek;
+	w->nextWeek = newweek;
+	Week* h3 = headweek;
+	for (; h3 != NULL; h3 = h3->nextWeek) {
+		printf("%s\n", h3->weekname);
+	}
+
+	//add_after(w, addw);///왜 매개변수 다르게 입력되는 거지,..?
+
+	
 
 }	
+//이를 기반으로 만들어본 함수
+int add_after(Week* prevweek, char* addw) {
+	if (prevweek = NULL)
+		return 0;
+	Week* newweek = malloc(sizeof(struct Week));
+	strcpy(newweek->weekname, addw);
+	newweek->nextWeek = prevweek->nextWeek;
+	prevweek->nextWeek = newweek;
+	return 1;
+}
+
+int strcmp_ptr(const char* ptr1, const char* ptr2) {
+	for (int i = 0; ptr1[i] != '\0' || ptr2[i] != '\0'; ++i) {
+		if (ptr1[i] != ptr2[i])
+			return 0;
+	}
+	return 1;
+}
