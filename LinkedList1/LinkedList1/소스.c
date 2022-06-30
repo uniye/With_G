@@ -83,23 +83,16 @@ main() {
 	}
 	
 	char *addw = "힘듬";
-	Week* newweek = malloc(sizeof(struct Week));
-	strcpy(newweek->weekname, addw);
-	newweek->nextWeek = w->nextWeek;
-	w->nextWeek = newweek;
-	Week* h3 = headweek;
-	for (; h3 != NULL; h3 = h3->nextWeek) {
-		printf("%s\n", h3->weekname);
+	add_after(w, addw);
+	for (; headweek != NULL; headweek = headweek->nextWeek) {
+		printf("%s\n", headweek->weekname);
 	}
-
-	//add_after(w, addw);///왜 매개변수 다르게 입력되는 거지,..?
-
 	
 
 }	
 //이를 기반으로 만들어본 함수
 int add_after(Week* prevweek, char* addw) {
-	if (prevweek = NULL)
+	if (&prevweek == NULL)
 		return 0;
 	Week* newweek = malloc(sizeof(struct Week));
 	strcpy(newweek->weekname, addw);
