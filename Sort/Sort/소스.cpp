@@ -5,7 +5,10 @@ void selectionSort(int a[], int n);
 void sw(int a[], int m_index, int c_index);
 void bubbleSort(int a[], int n);
 void insertionSort(int a[], int n);
-
+void mergeSort(int a[], int first, int last);
+void merge(int a[], int first, int mid, int last);
+void quickSort(int a[], int left, int right);
+int partition(int a[], int m, int n);
 
 int main() {
 	const int size = 10;
@@ -13,8 +16,9 @@ int main() {
 	
 	//selectionSort(a,size);
 	//bubbleSort(a, size);
-	insertionSort(a, size);
-
+	//insertionSort(a, size);
+	//mergeSort(a, 0, size-1);
+	quickSort(a,0,size-1);
 
 	for (int i = 0; i < 10; i++) {
 		cout << a[i] << " ";
@@ -25,6 +29,60 @@ void sw(int a[], int s, int w) {
 	int temp = a[s];
 	a[s] = a[w];
 	a[w] = temp;
+}
+//합병정렬
+void mergeSort(int a[], int first, int last) { //시간복잡도는 O(nlogn)이다.
+	if (first < last) {
+		int mid = (first + last) / 2;
+		mergeSort(a, first, mid);
+		mergeSort(a, mid + 1, last);
+		merge(a,first,mid,last);
+	}
+	 
+}
+
+void merge(int a[], int first, int mid, int last) {
+	int *sorted = new int[last-first+1];
+	int i, j, k;
+	i = first;		
+	j = mid + 1;	
+	k = 0;			
+	while (i <= mid && j <= last){
+		if (a[i] <= a[j]) sorted[k++] = a[i++];
+		else sorted[k++] = a[j++];
+	}
+	if (i > mid)
+		while (j <= last) sorted[k++] = a[j++];
+	else
+		while (i <= mid) sorted[k++] = a[i++];
+	for (i = first, k = 0; i <= last; i++, k++) a[i] = sorted[k];
+	delete[] sorted;
+}
+
+//빠른정렬: 비균등 분할
+void quickSort(int a[], int left, int right) {//최악의 경우 O(n^2) 최적의 경우 O(nlogn)
+	if (left < right) {
+		int  p= partition(a, left, right); 
+		quickSort(a, left, p - 1); 
+		quickSort(a, p + 1, right); 
+	}
+}
+
+int partition(int a[], int m, int n) {
+	int temp;
+	int middle = (m + n) / 2;
+	int pivot = a[middle];
+	a[middle] = a[m];
+	a[m] = pivot;
+	int p = m;
+	for (int k = m + 1; k <= n; k++) {
+		if (a[k] < pivot) {
+			p = p + 1;
+			sw(a,p,k);
+		}
+	}
+	sw(a,m,p);
+	return p;
 }
 
 //선택정렬
