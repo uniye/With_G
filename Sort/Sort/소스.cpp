@@ -9,16 +9,22 @@ void mergeSort(int a[], int first, int last);
 void merge(int a[], int first, int mid, int last);
 void quickSort(int a[], int left, int right);
 int partition(int a[], int m, int n);
+void heapSort(int a[], int size);
+void heapify(int a[], int h, int m);
 
 int main() {
 	const int size = 10;
 	int a[size] = {10,2,1,5,6,4,3,7,8,9};
-	
+	int a1[size] = {0,10,2,1,5,6,4,3,7,8 };
 	//selectionSort(a,size);
 	//bubbleSort(a, size);
 	//insertionSort(a, size);
 	//mergeSort(a, 0, size-1);
-	quickSort(a,0,size-1);
+	//quickSort(a,0,size-1);
+	heapSort(a1,size);
+	for (int i = 0; i < 10; i++) {
+		cout << a1[i] << " ";
+	}
 
 	for (int i = 0; i < 10; i++) {
 		cout << a[i] << " ";
@@ -30,6 +36,37 @@ void sw(int a[], int s, int w) {
 	a[s] = a[w];
 	a[w] = temp;
 }
+
+//힙정렬
+void heapSort(int a[], int size) { //시간복잡도는 O(nlogn)이다.
+	int n = size - 1;
+	for (int i = n / 2; i >= 1; i = i - 1) {
+		heapify(a, i, n);
+	}
+	for (int i = n - 1; i >= 1; i = i - 1) {
+		sw(a,1,i+1);
+		heapify(a, 1, i);
+	}
+}
+
+void heapify(int a[], int h, int m) {
+	int root = a[h];
+	int j = 0;
+	for (j = 2 * h; j <= m; j = 2 * j) {
+		if (j < m) {
+			if (a[j] < a[j + 1])
+				j = j + 1;
+		}
+		if (root >= a[j])
+			break;
+		else
+			a[j / 2] = a[j];
+	}
+	a[j / 2] = root;
+}
+
+
+
 //합병정렬
 void mergeSort(int a[], int first, int last) { //시간복잡도는 O(nlogn)이다.
 	if (first < last) {
