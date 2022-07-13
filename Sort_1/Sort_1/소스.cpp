@@ -14,7 +14,7 @@ int main() {
 	
 	//shellsort(a, SIZE);
 	radixsort(a, SIZE);
-	//show(a, SIZE);
+	show(a, SIZE);
 	return 0;
 }
 void show(int a[],int n) {
