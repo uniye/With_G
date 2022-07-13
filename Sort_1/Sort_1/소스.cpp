@@ -14,8 +14,7 @@ int main() {
 	
 	//shellsort(a, SIZE);
 	radixsort(a, SIZE);
-	show(a, SIZE);
-	
+	//show(a, SIZE);
 	return 0;
 }
 void show(int a[],int n) {
@@ -67,7 +66,6 @@ void shellsort(int a[], int n) {//최선의 경우: O(N), 최악의 경우: O(N^2), 평균적
 		}
 	}
 }
-
 void intervalSort(int a[], int i, int interval, int n) {//서브리스트를 삽입 정렬로 정렬
 	int j = i + interval;
 	while (j < n) {
